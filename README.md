@@ -19,7 +19,6 @@ Choose an environment without changing source code:
 mvn clean test -Denv=qa -DbaseUrl=https://your-api.example.com
 ```
 
-The default smoke test uses `https://httpbin.org` and can be replaced by setting `baseUrl` and `healthPath` properties.
 
 ## Structure
 
