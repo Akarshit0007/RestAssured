@@ -1,0 +1,17 @@
+target/
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# VS Code and operating-system noise
+.DS_Store
+Thumbs.db
+*.swp
+
+# Generated logs
+*.log
+
+# Generated Java modernization runs; keep hooks and configuration trackable
+.github/modernize/*/*/*/
