@@ -9,7 +9,7 @@ import com.banking.inc.tests.base.BaseApiTest;
 
 import io.restassured.response.Response;
 
-public class loginTest extends BaseApiTest {
+public class loginCodesTest extends BaseApiTest {
 
     @Test 
     public void userCanLogin() {
@@ -24,4 +24,13 @@ public class loginTest extends BaseApiTest {
         Assert.assertNotNull(response.jsonPath().getString("token"));
         System.out.println(response.jsonPath().getString("token"));
         }
+    @Test
+    public void wrongUserCannotLogin() {
+        Map<String, String> requestBody = Map.of(
+            "Wemail", ConfigManager.required("email"),
+            "password", ConfigManager.required("password")
+        );
+        Response response = apiClient.post(ConfigManager.required("loginPath"), requestBody);
+        Assert.assertEquals(response.statusCode(), 404);
+    }
 }
