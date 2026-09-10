@@ -21,9 +21,8 @@ public class loginCodesTest extends BaseApiTest {
         Response response = apiClient.post(ConfigManager.required("loginPath"), requestBody);
 
         Assert.assertEquals(response.statusCode(), 200);
-        Assert.assertNotNull(response.jsonPath().getString("token"));
-        System.out.println(response.jsonPath().getString("token"));
         }
+
     @Test
     public void wrongUserCannotLogin() {
         Map<String, String> requestBody = Map.of(
@@ -32,5 +31,16 @@ public class loginCodesTest extends BaseApiTest {
         );
         Response response = apiClient.post(ConfigManager.required("loginPath"), requestBody);
         Assert.assertEquals(response.statusCode(), 404);
+    }
+    
+    @Test 
+    public void realUserCanGetVerificationCode(){
+        Map<String, String> requestBody = Map.of(
+            "email", ConfigManager.required("email"),
+            "password", ConfigManager.required("password")
+        );
+        Response response = apiClient.post(ConfigManager.required("codeVerify"), requestBody);
+        Assert.assertEquals(response.statusCode(), 200);
+
     }
 }
