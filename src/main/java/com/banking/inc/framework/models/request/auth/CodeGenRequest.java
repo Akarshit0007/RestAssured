@@ -1,15 +1,12 @@
 package com.banking.inc.framework.models.request.auth;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data 
+@AllArgsConstructor 
+@NoArgsConstructor 
 public class CodeGenRequest {
     private String email;
-
-    public CodeGenRequest(String email){
-        this.email = email;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email){
-        this.email = email;
-    }
 }
