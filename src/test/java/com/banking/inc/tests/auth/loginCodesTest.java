@@ -1,5 +1,4 @@
 package com.banking.inc.tests.auth;
-import java.util.Map;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
