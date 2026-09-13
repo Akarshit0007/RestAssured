@@ -12,6 +12,7 @@
         <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <env>dev</env>
+        <suiteXmlFile>src/test/resources/all.xml</suiteXmlFile>
         <rest.assured.version>5.5.6</rest.assured.version>
         <testng.version>7.11.0</testng.version>
         <jackson.version>2.18.3</jackson.version>
@@ -70,7 +71,7 @@
                 <version>3.5.3</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
                     <systemPropertyVariables>
                         <env>${env}</env>

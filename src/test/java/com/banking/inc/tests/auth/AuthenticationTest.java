@@ -14,12 +14,12 @@ import io.restassured.response.Response;
 public class AuthenticationTest extends BaseApiTest {
     private AuthService authService;
 
-    @BeforeClass 
+    @BeforeClass(alwaysRun = true)
     public void setupService(){
         this.authService = new AuthService(apiClient);
     }
 
-    @Test (description = "Verify sucessfull end-to-email authentication flow With Code")
+    @Test (groups = {"regression"} ,description = "Verify sucessfull end-to-email authentication flow With Code")
     public void verfiyEmailAuthenticationSuccessDuringNotRememberedPassword(){
         String userEmail = ConfigManager.required("email");
         // Request Code

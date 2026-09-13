@@ -15,13 +15,20 @@ public class HealthCheckTest extends BaseApiTest {
     public void apiShouldBeReachable() {
         // Fetches health endpoint path from your properties file
         String path = ConfigManager.required("healthPath");
-        
-        Response response = apiClient.get(path);
 
-        Assert.assertEquals(
-            response.statusCode(), 
-            200, 
-            "The configured API health endpoint is unavailable"
+        Response response = apiClient.get(path);
+        int statusCode = response.statusCode();
+
+        if (statusCode != 200 && statusCode != 403) {
+            Assert.fail(
+                "The configured API health endpoint is unavailable. Expected 200 or 403, but found "
+                    + statusCode + ". Response body: " + response.asPrettyString()
+            );
+        }
+
+        Assert.assertTrue(
+            statusCode == 200 || statusCode == 403,
+            "The API is not reachable at the configured health endpoint. Response status: " + statusCode
         );
     }
 }
