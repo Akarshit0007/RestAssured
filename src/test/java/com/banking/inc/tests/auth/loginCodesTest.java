@@ -2,44 +2,57 @@ package com.banking.inc.tests.auth;
 import java.util.Map;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.banking.inc.framework.config.ConfigManager;
+import com.banking.inc.tests.auth.services.AuthService;
+import com.banking.inc.tests.auth.services.LoginCodesService;
 import com.banking.inc.tests.base.BaseApiTest;
 
 import io.restassured.response.Response;
 
 public class loginCodesTest extends BaseApiTest {
 
-    @Test 
-    public void userCanLogin() {
-        Map<String, String> requestBody = Map.of(
-            "email", ConfigManager.required("email"),
-            "password", ConfigManager.required("password")
-        );
+    private LoginCodesService loginCodesService;
+     private AuthService authService;
+    
 
-        Response response = apiClient.post(ConfigManager.required("loginPath"), requestBody);
+ @BeforeClass(alwaysRun = true)
+    public void setupService(){
+        this.loginCodesService = new LoginCodesService(apiClient);
+        this.authService = new AuthService(apiClient);
+    }
+
+
+    @Test( groups = {"smoke", "regression"}, description = "User With Valid Credentials Can Login")
+    public void userCanLogin() {
+         String userEmail = ConfigManager.required("email");
+        String password =  ConfigManager.required("password");
+
+        Response response = loginCodesService.Login(userEmail, password);
 
         Assert.assertEquals(response.statusCode(), 200);
         }
 
-    @Test
+
+    @Test( groups = {"regression"}, description = "Wrong Email Cannot Login")
     public void wrongUserCannotLogin() {
-        Map<String, String> requestBody = Map.of(
-            "Wemail", ConfigManager.required("email"),
-            "password", ConfigManager.required("password")
-        );
-        Response response = apiClient.post(ConfigManager.required("loginPath"), requestBody);
+
+        String userEmail = ConfigManager.required("Wemail");
+        String password =  ConfigManager.required("password");
+
+        Response response = loginCodesService.Login(userEmail, password);
         Assert.assertEquals(response.statusCode(), 404);
     }
     
-    @Test 
+
+    @Test(groups = {"smoke", "regression"},description = "A User Can Get and Genarate Verification Code")
     public void realUserCanGetVerificationCode(){
-        Map<String, String> requestBody = Map.of(
-            "email", ConfigManager.required("email"),
-            "password", ConfigManager.required("password")
-        );
-        Response response = apiClient.post(ConfigManager.required("codeVerify"), requestBody);
+
+        String userEmail = ConfigManager.required("email");
+
+        Response response = authService.requestVerificationCode(userEmail);
         Assert.assertEquals(response.statusCode(), 200);
 
     }

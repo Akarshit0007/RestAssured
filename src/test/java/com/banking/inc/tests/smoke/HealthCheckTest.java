@@ -7,10 +7,21 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class HealthCheckTest extends BaseApiTest {
-    @Test(description = "Verifies that the configured API is reachable")
-    public void apiShouldBeReachable() {
-        Response response = apiClient.get(ConfigManager.required("healthPath"));
 
-        Assert.assertEquals(response.statusCode(), 200, "The configured API health endpoint is unavailable");
+    @Test(
+        groups = {"smoke", "regression"}, 
+        description = "Verifies that the configured API is reachable"
+    )
+    public void apiShouldBeReachable() {
+        // Fetches health endpoint path from your properties file
+        String path = ConfigManager.required("healthPath");
+        
+        Response response = apiClient.get(path);
+
+        Assert.assertEquals(
+            response.statusCode(), 
+            200, 
+            "The configured API health endpoint is unavailable"
+        );
     }
 }
