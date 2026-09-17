@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 
 import com.banking.inc.framework.config.ConfigManager;
 import com.banking.inc.framework.models.response.auth.CodeGenResponse;
-import com.banking.inc.tests.auth.services.AuthService;
+import com.banking.inc.framework.services.AuthService;
 import com.banking.inc.tests.base.BaseApiTest;
 
 import io.restassured.response.Response;

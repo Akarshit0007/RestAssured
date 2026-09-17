@@ -5,21 +5,21 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.banking.inc.framework.config.ConfigManager;
-import com.banking.inc.tests.auth.services.AuthService;
-import com.banking.inc.tests.auth.services.LoginCodesService;
+import com.banking.inc.framework.services.AuthService;
+import com.banking.inc.framework.services.LoginService;
 import com.banking.inc.tests.base.BaseApiTest;
 
 import io.restassured.response.Response;
 
 public class loginCodesTest extends BaseApiTest {
 
-    private LoginCodesService loginCodesService;
+    private LoginService loginService;
      private AuthService authService;
     
 
  @BeforeClass(alwaysRun = true)
     public void setupService(){
-        this.loginCodesService = new LoginCodesService(apiClient);
+        this.loginService = new LoginService(apiClient);
         this.authService = new AuthService(apiClient);
     }
 
@@ -29,7 +29,7 @@ public class loginCodesTest extends BaseApiTest {
          String userEmail = ConfigManager.required("email");
         String password =  ConfigManager.required("password");
 
-        Response response = loginCodesService.Login(userEmail, password);
+        Response response = loginService.login(userEmail, password);
 
         Assert.assertEquals(response.statusCode(), 200);
         }
@@ -41,7 +41,7 @@ public class loginCodesTest extends BaseApiTest {
         String userEmail = ConfigManager.required("Wemail");
         String password =  ConfigManager.required("password");
 
-        Response response = loginCodesService.Login(userEmail, password);
+        Response response = loginService.login(userEmail, password);
         Assert.assertEquals(response.statusCode(), 404);
     }
     

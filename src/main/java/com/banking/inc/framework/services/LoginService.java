@@ -1,20 +1,18 @@
-package com.banking.inc.tests.auth.services;
+package com.banking.inc.framework.services;
 
 import com.banking.inc.framework.client.ApiClient;
 import com.banking.inc.framework.config.ConfigManager;
 import com.banking.inc.framework.models.request.auth.LoginRequest;
-
 import io.restassured.response.Response;
 
-public class LoginCodesService {
-    
+public class LoginService {
     private final ApiClient apiClient;
 
-    public LoginCodesService(ApiClient apiClient){
+    public LoginService(ApiClient apiClient) {
         this.apiClient = apiClient;
     }
 
-    public Response Login(String email, String password){
+    public Response login(String email, String password) {
         LoginRequest payload = new LoginRequest(email, password);
         return apiClient.post(ConfigManager.required("loginPath"), payload);
     }
